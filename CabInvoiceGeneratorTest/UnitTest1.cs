@@ -13,5 +13,14 @@ namespace CabInvoiceGeneratorTest
             int Fair = generate.totalFair(5,60);
             Assert.AreEqual(115, Fair);
         }
+
+        //calculate aggregate fare according to total no. of rides
+        [Test]
+        public void agregatefare()
+        {
+            InvoiceGenerator generate = new InvoiceGenerator();
+            int aggregate = generate.aggregateFare(5);
+            Assert.AreEqual(aggregate,575);
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceGenerator
     {
+        //Calculate total fair of a single journey
         public int totalFair(int distanceInKm, int timeInMinute )
         {
             //variable initialize
@@ -15,10 +16,22 @@ namespace CabInvoiceGenerator
             int totalCost = Minimum + (perKilometer * distanceInKm) + (perMinute * timeInMinute);
             return totalCost;
         }
-        public static void Main(string[] args)
+
+        //Calculate the aggregate total fair of multiple rides
+        public int aggregateFare(int numberOfRides)
         {
-            //Print welcome message
-            Console.WriteLine("Welcome to cab invoice generator");
+            //variable initialize
+            int aggregateFare = 0;
+
+            //create instance variable
+            InvoiceGenerator cabInvoice = new InvoiceGenerator();
+            
+            //calculate aggregate fare according to total no. of rides
+            for (int ride = 1; ride <= numberOfRides; ride++)
+            {
+                aggregateFare = aggregateFare + cabInvoice.totalFair(5, 60);
+            }
+            return aggregateFare;
         }
     }
 }
