@@ -4,9 +4,7 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceGenerator
     {
-        //variable initialize
-        int numberOfRides = 5;
-
+        
         //Calculate total fair of a single journey
         public int totalFair(int distanceInKm, int timeInMinute )
         {
@@ -16,15 +14,16 @@ namespace CabInvoiceGenerator
             int Minimum = 5;
 
             //calculate total fair
-            int totalCost = Minimum + (perKilometer * distanceInKm) + (perMinute * timeInMinute);
-            return totalCost;
+            int totalCost = (perKilometer * distanceInKm) + (perMinute * timeInMinute);
+            return Math.Max(totalCost,Minimum);
         }
 
-        //Calculate the aggregate total fair of multiple rides
-        public int aggregateFare()
+        //Calculate the aggregate fare, average far and total number of rides 
+        public Tuple<int,int,double> aggregateFare(int numberOfRides)
         {
             //variable initialize
             int aggregateFare = 0;
+            int totalNumbeOfRides = 0;
             
             //create instance variable
             InvoiceGenerator cabInvoice = new InvoiceGenerator();
@@ -33,26 +32,12 @@ namespace CabInvoiceGenerator
             for (int ride = 1; ride <= numberOfRides; ride++)
             {
                 aggregateFare = aggregateFare + cabInvoice.totalFair(5, 60);
+                totalNumbeOfRides++;
             }
-            return aggregateFare;
-        }
 
-        //Total nuber of rides
-        public int totalNumberOfRides()
-        {
-            return numberOfRides;
-        }
+            double averageFarePerRide = aggregateFare / totalNumbeOfRides;
 
-        //Average fare per ride
-        public int averagFarePerRide()
-        {
-            //create instance variable 
-            InvoiceGenerator cabInvoice = new InvoiceGenerator();
-            
-            //calculate average fare
-            int average = (cabInvoice.aggregateFare() / totalNumberOfRides());
-            
-            return average;
+            return new Tuple<int,int,double>(aggregateFare, totalNumbeOfRides, averageFarePerRide);
         }
     }
 }

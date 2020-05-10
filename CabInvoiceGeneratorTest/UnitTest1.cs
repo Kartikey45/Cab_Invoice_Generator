@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using CabInvoiceGenerator;
+using System;
 
 namespace CabInvoiceGeneratorTest
 {
@@ -11,34 +12,34 @@ namespace CabInvoiceGeneratorTest
         {
             InvoiceGenerator generate = new InvoiceGenerator();
             int Fair = generate.totalFair(5,60);
-            Assert.AreEqual(115, Fair);
+            Assert.AreEqual(110, Fair);
         }
 
-        //calculate aggregate fare according to total no. of rides
+        //calculate aggregate fare
         [Test]
-        public void agregatefare()
+        public void EnhancedInvoiceAggregateFair()
         {
             InvoiceGenerator generate = new InvoiceGenerator();
-            int aggregate = generate.aggregateFare();
-            Assert.AreEqual(aggregate,575);
-        }
-        
-        //Total number of rides
-        [Test]
-        public void totalRides()
-        {
-            InvoiceGenerator generate = new InvoiceGenerator();
-            int totalrides = generate.totalNumberOfRides();
-            Assert.AreEqual(5, totalrides);
+            Tuple<int, int, double> aggregate = generate.aggregateFare(5);
+            Assert.AreEqual(aggregate.Item1,550);
         }
 
-        //Average fare per ride
+        //calculate Average fare
         [Test]
-        public void AverageFarePerRide()
+        public void EnhancedInvoiceAveragefare()
         {
             InvoiceGenerator generate = new InvoiceGenerator();
-            int averageFare = generate.averagFarePerRide();
-            Assert.AreEqual(115, averageFare);
+            Tuple<int, int, double> average = generate.aggregateFare(5);
+            Assert.AreEqual(average.Item3,110);
+        }
+
+        //Calculate total number of rides
+        [Test]
+        public void EnhancedInvoiceTotalNumberOfRides()
+        {
+            InvoiceGenerator generate = new InvoiceGenerator();
+            Tuple<int, int, double> average = generate.aggregateFare(5);
+            Assert.AreEqual(average.Item2,5);
         }
     }
 }
