@@ -19,7 +19,7 @@ namespace CabInvoiceGenerator
         }
 
         //Calculate the aggregate fare, average far and total number of rides 
-        public Tuple<int,int,double> aggregateFare(int numberOfRides)
+        public Tuple<int,int,double> aggregateFare(Ride[] rides)
         {
             //variable initialize
             int aggregateFare = 0;
@@ -29,15 +29,16 @@ namespace CabInvoiceGenerator
             InvoiceGenerator cabInvoice = new InvoiceGenerator();
             
             //calculate aggregate fare according to total no. of rides
-            for (int ride = 1; ride <= numberOfRides; ride++)
+            foreach(Ride ride in rides)
             {
-                aggregateFare = aggregateFare + cabInvoice.totalFair(5, 60);
+                aggregateFare = aggregateFare + cabInvoice.totalFair(ride.distanceInKm, ride.timeInMinute);
                 totalNumbeOfRides++;
             }
 
+            //calculate average per ride
             double averageFarePerRide = aggregateFare / totalNumbeOfRides;
 
-            return new Tuple<int,int,double>(aggregateFare, totalNumbeOfRides, averageFarePerRide);
+            return new Tuple<int,int,double>(aggregateFare, rides.Length, averageFarePerRide);
         }
     }
 }
